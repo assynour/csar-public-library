@@ -1,0 +1,76 @@
+tosca_definitions_version: alien_dsl_2_0_0
+
+metadata:
+  template_name: ischyo-service-definition
+  template_author: Nour
+  template_version: Ischyo-v0
+
+description: >
+  Contains the node type definitions of the ServiceDefinition file
+
+imports:
+  - tosca-normative-types:1.0.0-ALIEN20
+
+capability_types:
+
+  ischyo.capabilities.Resource:
+    derived_from: tosca.capabilities.Root
+    properties:
+      name:
+        type: string
+
+  ischyo.capabilities.NetworkResource:
+    derived_from: ischyo.capabilities.Resource
+
+  ischyo.capabilities.SubnetResource:
+    derived_from: ischyo.capabilities.NetworkResource
+    properties:
+      snid_ref:
+        type: string
+
+  ischyo.capabilities.RouteResource:
+    derived_from: ischyo.capabilities.NetworkResource
+    properties:
+      route_ref:
+        type: string
+
+  ischyo.capabilities.IPResource:
+    derived_from: ischyo.capabilities.NetworkResource
+    properties:
+      ip_address_ref:
+        type: string
+
+  ischyo.capabilities.MACResource:
+    derived_from: ischyo.capabilities.NetworkResource
+    properties:
+      mac_address_ref:
+        type: string
+
+  ischyo.capabilities.L4PortResource:
+    derived_from: ischyo.capabilities.NetworkResource
+    properties:
+      L4_port_ref:
+        type: string
+
+  ischyo.capabilities.MulticastResource:
+    derived_from: ischyo.capabilities.NetworkResource
+    properties:
+      multicats_address_ref:
+        type: string
+
+node_types:
+  ischyo.nodes.Service:
+    derived_from: tosca.nodes.Root
+    description: The ischyo Service node type that all ischyo services are derived from
+    properties:
+      protocol:
+        type: string
+
+    capabilities:
+      exposes_resource:
+        type: ischyo.capabilities.Resource
+
+    requirements:
+      requires_resource:
+        capability: ischyo.capabilities.Resource
+
